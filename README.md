@@ -62,7 +62,7 @@ CREATE TABLE recipes (
 ## 5. Create the table
 
 ```bash
-psql -h 127.0.0.1 recipes < recipes.sql
+psql -h 127.0.0.1 recipes < seeds/recipes.sql
 ```
 
 ## 3. Define the class names
