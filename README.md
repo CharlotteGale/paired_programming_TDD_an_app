@@ -71,93 +71,55 @@ Usually, the Model class name will be the capitalised table name (single instead
 
 ```python
 # EXAMPLE
-# Table name: students
+# Table name: recipes
 
 # Model class
-# (in lib/student.py)
-class Student
+# (in lib/recipe.py)
+class Recipes
 
-
-# Repository class
-# (in lib/student_repository.py)
-class StudentRepository
-
-```
-
-## 4. Implement the Model class
-
-Define the attributes of your Model class. You can usually map the table columns to the attributes of the class, including primary and foreign keys.
-
-```python
-# EXAMPLE
-# Table name: students
-
-# Model class
-# (in lib/student.py)
-
-class Student:
-    def __init__(self):
-        self.id = 0
-        self.name = ""
-        self.cohort_name = ""
-
-        # Replace the attributes by your own columns.
-
-
-# We can set the attributes to default empty values and set them later,
-# here's an example:
-#
-# >>> student = Student()
-# >>> student.name = "Will"
-# >>> student.cohort_name = "September Devs"
-# >>> student.name
-# 'Will'
-# >>> student.cohort_name
-# 'September Devs'
-
-```
-
-## 5. Define the Repository Class interface
-
-Your Repository class will need to implement methods for each "read" or "write" operation you'd like to run against the database.
-
-Using comments, define the method signatures (arguments and return value) and what they do - write up the SQL queries that will be used by each method.
-
-```python
-# EXAMPLE
-# Table name: students
+    def __init__(self, id, name, cooking_time, rating)
+        '''
+        parameters - id(None) ,name(string), cooking_time(int), rating(int)
+        outputs - nothing
+        side effects - sets all parameters as instance variables
+        '''
+    def __eq__(self, other):
+        '''
+        params - other(class object)
+        outputs - Bool, doesn't dirrectly output, but is returned
+        side effect - nothing
+        '''
+    def __repr__(self):
+        '''
+        params - nothing
+        outputs - formats the class object as string
+        side effect - nothing
+        '''
 
 # Repository class
-# (in lib/student_repository.py)
+# (in lib/recipe_repository.py)
+class RecipeRepository
 
-class StudentRepository():
+    def __init__(self, connection)
+        '''
+        params - connection
+        outputs - nothing
+        side effect - essablishes the connection to the database.
+        '''
 
-    # Selecting all records
-    # No arguments
-    def all():
-        # Executes the SQL query:
-        # SELECT id, name, cohort_name FROM students;
+    def all(self):
+        '''
+        params - nothing
+        outputs - List of dictionarys(recipes)
+        side effect - nothing
+        '''     
 
-        # Returns an array of Student objects.
-
-        # Gets a single record by its ID
-        # One argument: the id (number)
-    def find(id):
-        # Executes the SQL query:
-        # SELECT id, name, cohort_name FROM students WHERE id = $1;
-
-        # Returns a single Student object.
-
-        # Add more methods below for each operation you'd like to implement.
-
-    # def create(student)
-    # 
-
-    # def update(student)
-    # 
-
-    # def delete(student)
-    # 
+    def find(self, id):
+        '''
+        params - id(int)
+        outputs - a single class objec with the specified id
+        side effect - nothing
+        '''     
 
 ```
 
@@ -169,36 +131,64 @@ These examples will later be encoded as Pytest tests.
 
 ```python
 # EXAMPLES
-
+# test_recip_repo_.py
 # 1
-# Get all students
+# Get all recipe
 
-repo = StudentRepository()
+repo = RecipeRepository()
 
-students = repo.all()
+recipe = repo.all()
 
-len(students) # =>  2
+len(recipe) # =>  2
 
-students[0].id # =>  1
-students[0].name # =>  'David'
-students[0].cohort_name # =>  'April 2022'
+recipe[0].id # =>  1
+recipe[0].name # =>  'test'
+recipe[0].cooking_time # =>  5
+recipe[0].rating # => 5
 
-students[1].id # =>  2
-students[1].name # =>  'Anna'
-students[1].cohort_name # =>  'May 2022'
+recipe[1].id # =>  2
+recipe[1].name # =>  'test aswell'
+recipe[1].cooking_time # =>  10
+recipe[1].rating # => 1
 
 # 2
-# Get a single student
+# Get a single recipe
 
-repo = StudentRepository()
+repo = RecipeRepository()
 
-student = repo.find(1)
+recipe = repo.find(1)
 
-student.id # =>  1
-student.name # =>  'David'
-student.cohort_name # =>  'April 2022'
+recipe.id # =>  1
+recipe.name # =>  'test'
+recipe.cooking_time # =>  5
+recipe.rating # => 5
 
-# Add more examples for each method
+#test_recipe.py
+
+#1
+# recipe constructs correctly
+
+recipe = Recipes(['id'], ['name'], ['cooking_time'], ['rating'])
+
+recipe.id = id
+recipe.name = name
+recipe.cooking_time = cooking_time
+recipe.rating = rating
+
+#2
+# check if identical recipes are equal
+
+recipe1 = Recipes(['id'], ['name'], ['cooking_time'], ['rating'])
+recipe2 = Recipes(['id'], ['name'], ['cooking_time'], ['rating'])
+
+recipe1 == recipe2 # => True
+
+#3
+#check if format is nice
+
+recipe = Recipes(['id'], ['name'], ['cooking_time'], ['rating'])
+
+str(recipe) == 'Recipes([id], [name], [cooking_time], [rating])'
 ```
 
 Encode this example as a test.
