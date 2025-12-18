@@ -5,4 +5,10 @@ class RecipeRepository:
         self._connection = connection
 
     def all(self):
-        pass
+        rows = self._connection.execute('SELECT * FROM recipes')
+        recipes = []
+        
+        for row in rows:
+            item = Recipe(row['id'], row['name'], row['cooking_time'], row['rating'])
+            recipes.append(item)
+        return recipes

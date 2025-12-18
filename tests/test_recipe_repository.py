@@ -19,3 +19,5 @@ def test_get_all_recipe_records(db_connection):
         Recipe(9, 'Pad Thai', 25, 5),
         Recipe(10,'Chocolate Brownies', 30, 5)
     ]
+    
+  
