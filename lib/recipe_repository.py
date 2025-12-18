@@ -12,3 +12,12 @@ class RecipeRepository:
             item = Recipe(row['id'], row['name'], row['cooking_time'], row['rating'])
             recipes.append(item)
         return recipes
+    
+    def find(self, recipe_id):
+        rows = self._connection.execute(
+            'SELECT * FROM recipes WHERE id = %s',
+            [recipe_id]
+        )
+        row = rows[0]
+
+        return Recipe(row['id'], row['name'], row['cooking_time'], row['rating'])

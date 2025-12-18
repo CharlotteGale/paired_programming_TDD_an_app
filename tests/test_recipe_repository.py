@@ -20,4 +20,10 @@ def test_get_all_recipe_records(db_connection):
         Recipe(10,'Chocolate Brownies', 30, 5)
     ]
     
-  
+def test_get_single_recipe_record(db_connection):
+    db_connection.seed("seeds/recipes.sql")
+    repo = RecipeRepository(db_connection)
+
+    recipe = repo.find(1)
+
+    assert recipe == Recipe(1, 'Spaghetti Carbonara', 20, 5)
